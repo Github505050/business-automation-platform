@@ -21,6 +21,8 @@ and can be run on a suitable host later if a client requests it.
 
 ### Publish it on GitHub Pages
 
+The free static showcase is built from the checked-in application on each push to `main`.
+
 1. In the repository **Settings → Pages**, select **Source: GitHub Actions**.
 2. Select **Actions → Publish free portfolio demo on GitHub Pages → Run workflow**
    if it has not run automatically after the push.
