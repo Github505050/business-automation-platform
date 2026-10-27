@@ -1,0 +1,40 @@
+name: Generate real app screenshots
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - 'public/images/**'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - run: npm run check && npm test
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Start application and check readiness
+        run: |
+          npm start > /tmp/northstar.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3000/health > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/northstar.log
+          exit 1
+      - run: node scripts/capture.mjs
+      - name: Commit verified screenshots
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add public/images docs/*.png
+          if ! git diff --cached --quiet; then
+            git commit -m "Capture genuine dashboard screenshots [skip ci]"
+            git push
+          fi
