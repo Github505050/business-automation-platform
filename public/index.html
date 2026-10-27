@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0c1224">
+  <meta name="description" content="Northstar Ops — a private, interactive business workflow automation demo. Manage leads, customers, projects and smart workflows.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Northstar Ops · Business automation, beautifully done</title>
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <aside id="sidebar" class="sidebar" aria-label="Primary navigation">
+      <div class="brand-row"><div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" width="24" height="24"><path d="M12 1 14.6 9.4 23 12l-8.4 2.6L12 23l-2.6-8.4L1 12l8.4-2.6L12 1Z" fill="currentColor"/></svg></div><div class="brand-name">northstar<span class="brand-dot">.</span><small>OPERATIONS SUITE</small></div><button class="icon-btn sidebar-close" data-action="close-nav" aria-label="Close navigation">✕</button></div>
+      <div class="workspace-select"><span class="workspace-symbol">N</span><div class="workspace-copy"><strong>Northstar Studio</strong><small>Private demo workspace</small></div><span class="online-dot" title="Demo workspace active"></span></div>
+      <div class="nav-label">WORKSPACE</div>
+      <nav id="main-nav"></nav>
+      <div class="sidebar-bottom"><div class="sidebar-tip"><div class="tip-spark">✦</div><strong>Your work, in sync.</strong><p>Four connected workflows, one simple command center.</p><button class="tip-link" data-nav="automations">Explore automations <span aria-hidden="true">→</span></button></div><div class="user-row"><div class="user-avatar">DE</div><div><strong>Demo Explorer</strong><small>Guest access</small></div><span class="user-ellipsis">•••</span></div></div>
+    </aside>
+    <div class="mobile-scrim" id="mobile-scrim" data-action="close-nav"></div>
+    <div class="main-frame">
+      <header class="topbar"><div class="topbar-left"><button class="icon-btn mobile-menu" data-action="open-nav" aria-label="Open navigation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><div class="breadcrumb"><span>Workspace</span><span class="crumb-chevron">›</span><strong id="breadcrumb-current">Overview</strong></div></div><div class="topbar-right"><div class="search-wrap"><span id="search-icon"></span><input aria-label="Search current page" id="global-search" type="search" placeholder="Search this view..."><kbd>⌘ K</kbd></div><button class="topbar-icon" data-action="refresh" aria-label="Refresh data" title="Refresh workspace" id="refresh-btn"></button><button class="topbar-icon notification-button" data-nav="activity" aria-label="View notifications" title="Activity and notifications" id="notification-icon"></button><button class="avatar-button" data-nav="settings" aria-label="Open settings">DE</button></div></header>
+      <main id="main-content" tabindex="-1"></main>
+      <footer class="app-footer"><span><span class="live-pulse"></span> All systems ready <span class="foot-divider">·</span> Fictional demo data</span><span>Northstar Ops v1.0 <span class="foot-divider">·</span> Built for modern teams</span></footer>
+    </div>
+  </div>
+  <div id="modal-root"></div>
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
