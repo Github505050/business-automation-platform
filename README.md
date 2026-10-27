@@ -4,7 +4,36 @@ A **real full-stack** business operations portfolio demonstration for fictional 
 
 > **Independent portfolio project**, not a commercial client implementation. Names, company records, financial figures, and analytics are fictional demonstration data. No commercial outcomes or testimonials are claimed.
 
-## Run locally in two steps
+## Free public portfolio demo — $0 hosting
+
+**Recommended:** GitHub Pages hosts a browser-only interactive showcase at
+`https://github505050.github.io/business-automation-platform/`.
+
+It uses the same frontend design with a separate offline adapter (`public/offline-api.js`),
+localStorage persistence and isolated per-browser fictional data. Lead/customer/project/task
+CRUD, status updates, charts, triggered workflow simulations, manual due-date checks,
+notifications and reset work without an account or server. No emails are sent.
+
+**Important distinction:** Public Pages mode is **not the full-stack backend** and does
+**not** run autonomous scheduled jobs, store data in SQLite, or share records across devices.
+The real Node + SQLite server is included separately in `server/index.mjs`, tested locally,
+and can be run on a suitable host later if a client requests it.
+
+### Publish it on GitHub Pages
+
+1. In the repository **Settings → Pages**, select **Source: GitHub Actions**.
+2. Select **Actions → Publish free portfolio demo on GitHub Pages → Run workflow**
+   if it has not run automatically after the push.
+3. After a green deploy, open
+   `https://github505050.github.io/business-automation-platform/` and test the demo.
+
+The GitHub Actions deployment runs tests first, builds `_site` using
+`npm run pages:build`, and publishes the static assets. **No card or paid hosting is required.**
+Do not upload real client information to this fictional demo.
+
+---
+
+## Run the full-stack backend locally in two steps
 
 1. Install Node.js **22.13 or newer** (Node 24 LTS recommended).
 2. From this directory run `npm start` and open `http://localhost:3000`.
@@ -85,31 +114,17 @@ This stack was selected for **immediate functional testing, no API costs, portab
 - Delete operations require confirmation in UI. Data is fictional and ephemeral after expiry.
 - The platform is **not an authenticated CRM for real businesses**. For paid customer use, add identity/authentication, billing/tenant management, a production-grade rate limiter, an audit policy, backups, robust CSRF safeguards, secret management, monitored scheduling, and a managed DB before taking real personal data.
 
-## Hosting and deployment
+## Alternative backend hosting (optional)
 
-You **must have a Node hosting service and durable disk**, not GitHub Pages alone. GitHub Pages may host static content, but not these backend automations or SQLite writes.
+The **public free demo** needs only GitHub Pages (see above). The separate full-stack
+Node/SQLite backend needs a server and durable storage for true production persistence
+and uninterrupted scheduling. GitHub Pages does not run Node servers.
 
-Practical deployment with Render **paid persistent disk**:
-
-1. Create a new **public GitHub repository** named `business-automation-platform` and upload all source files, excluding any `.sqlite` database file.
-2. Connect the repository to a Render **Web Service**, choose an appropriate Node version, no build command required, start command `npm start`.
-3. Attach a **paid persistent disk** mounted at `/data`.
-4. Set `SQLITE_PATH=/data/northstar.sqlite`, `NODE_ENV=production`, `ENABLE_SCHEDULER=1` and use HTTPS with the Render domain.
-5. Test inquiry, follow-up trigger, reload, project completion, and reset on the deployed site.
-6. Verify the app's public URL and link it in the Upwork portfolio only **after** testing.
-
-**Important:** Render free web services have no persistent disk; local SQLite would be erased on restart/spin-down. Hosting with no durable volume **does not meet** the persistent demo requirement. The in-process follow-up scheduler needs always-on service: if the host spins down, it doesn't run during that time. The current code does not include an external scheduled job or availability guarantee. Other hosts with durable disks and continuous processes are also suitable. Inspect hosting billing before choosing a plan.
-
-## One-click Render Blueprint deployment (persistent, paid)
-
-`render.yaml` configures an **always-on, paid web service** with a **1 GB attached persistent volume** and Node 24, so SQLite survives redeploys and the scheduler can run while online. Render bills for compute and storage; **review pricing and approve billing yourself** in Render. No costs are incurred from keeping the configuration in the GitHub repository.
-
-1. Upload the **source files and folders from this package** to the repository root (do not upload the zip itself or any `*.sqlite*` files).
-2. In Render, create a **New → Blueprint**, connect `Github505050/business-automation-platform`, and review the `render.yaml` plan and charges.
-3. If you approve the paid plan, select **Deploy Blueprint**, and note your assigned `onrender.com` URL.
-4. Verify `/health`, dashboard records, submitting a sample inquiry, follow-up and lead conversion, and refreshing without losing data. After deployment, check that repeated workflow runs do not create duplicate tasks.
-
-If you only want a no-cost temporary preview, you can instead create a **Free Web Service** using `npm start` with `NODE_ENV=production`; do not attach a disk. SQLite data will be discarded at instance restarts/redeploys and in-process scheduling pauses when Render spins down the service, so **it does not meet this project's persistent automation requirement**. Clearly label such a preview as temporary and resettable.
+`render.yaml` is an **optional free Render preview** with no paid disk and with its
+automatic scheduler disabled. SQLite changes can disappear on restart or idle spin-down;
+do not use the free Render preview as a durable customer database. Render may suspend
+free services that exhaust included usage. No Render account is required for the
+recommended Pages portfolio demo.
 
 ## Test commands and verification
 
@@ -118,7 +133,7 @@ npm run check
 npm test
 ```
 
-Eight backend test suites cover session isolation, persistence, validation, disabled rules, conversion idempotency, repeat follow-ups, project completion, task reopening, and reset.
+Eight backend test suites and eight browser demo suites cover session isolation, persistence, validation, disabled rules, conversion idempotency, repeat follow-ups, project completion, task reopening, and reset.
 
 UI layout snapshots are in `docs/` and `public/images/`. Chrome viewport layouts at 1440×950, 820×1040, and 390×844 were checked for page-level horizontal overflow and runtime JS errors. An interactive browser check connected the inquiry form and manual follow-up button to the actual backend API through a testing bridge (the browser environment blocked direct localhost navigation); both generated actual database records and execution logs.
 
