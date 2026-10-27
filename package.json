@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Northstar Ops — isolated full-stack business workflow automation demo",
+  "description": "Northstar Ops \u2014 isolated full-stack business workflow automation demo",
   "scripts": {
     "start": "node server/index.mjs",
     "dev": "node --watch server/index.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check server/index.mjs && node --check public/app.js"
+    "check": "node --check server/index.mjs && node --check public/app.js && node --check public/offline-api.js && node --check scripts/build-pages.mjs",
+    "pages:build": "node scripts/build-pages.mjs"
   },
-  "engines": { "node": ">=22.13.0" },
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "license": "MIT"
 }
